@@ -9,7 +9,7 @@ crate-type = ["cdylib"]
 
 [dependencies]
 pyo3 = { version = "0.22", features = ["extension-module"] }
-revm = { version = "14", default-features = false, features = ["std"] }
+revm = { version = "14", default-features = false, features = ["std", "serde"] }
 
 [profile.release]
 lto = true
