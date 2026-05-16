@@ -14,3 +14,6 @@ target/
 
 # Compiled Python extensions
 *.so
+
+# Machine-specific Cargo config (PYO3_PYTHON path — copy from .cargo/config.toml.example)
+.cargo/config.toml

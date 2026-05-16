@@ -1,0 +1,15 @@
+# Copy this file to .cargo/config.toml and set PYO3_PYTHON to your Python interpreter.
+# Required for `cargo test` to link against Python when using pyo3 extension-module feature.
+#
+# Find your Python path: which python3  (or: pyenv which python3)
+
+[env]
+PYO3_PYTHON = "/path/to/your/python3"
+
+[target.aarch64-apple-darwin]
+rustflags = [
+    "-L/path/to/your/python/lib",
+    "-lpython3.12",
+]
+
+# For x86_64-apple-darwin or Linux, add a matching [target.*] section.

@@ -4,8 +4,8 @@ use revm::primitives::{Address, U256};
 use std::str::FromStr;
 
 pub fn parse_address(addr: &str) -> PyResult<Address> {
-    let addr = addr.trim_start_matches("0x");
-    Address::from_str(addr)
+    let stripped = addr.trim_start_matches("0x");
+    Address::from_str(stripped)
         .map_err(|e| PyValueError::new_err(format!("Invalid address '{}': {}", addr, e)))
 }
 
@@ -37,8 +37,16 @@ mod tests {
     }
 
     #[test]
-    fn test_u256_from_u128() {
-        let val: u128 = 10u128.pow(18);
-        assert_eq!(py_int_to_u256(val), U256::from(val));
+    fn test_u256_one_eth() {
+        // 1 ETH in wei = 10^18 = 0xde0b6b3a7640000
+        let one_eth = py_int_to_u256(1_000_000_000_000_000_000u128);
+        assert_eq!(one_eth, U256::from_str_radix("de0b6b3a7640000", 16).unwrap());
+    }
+
+    #[test]
+    fn test_address_to_hex_roundtrip() {
+        let input = "d8da6bf26964af9d7eed9e03e53415d37aa96045";
+        let addr = parse_address(input).unwrap();
+        assert_eq!(address_to_hex(addr), format!("0x{input}"));
     }
 }
