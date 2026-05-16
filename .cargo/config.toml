@@ -1,0 +1,8 @@
+[env]
+PYO3_PYTHON = "/Users/salva/.pyenv/versions/3.12.3/bin/python3"
+
+[target.aarch64-apple-darwin]
+rustflags = [
+    "-L/Users/salva/.pyenv/versions/3.12.3/lib",
+    "-lpython3.12",
+]
