@@ -34,13 +34,15 @@ jobs:
         uses: astral-sh/setup-uv@v5
 
       - name: Install dependencies
-        run: uv pip install --system maturin pydantic pytest pytest-asyncio
+        run: |
+          uv venv
+          uv pip install maturin pydantic pytest pytest-asyncio
 
       - name: Build extension
-        run: maturin develop --skip-install
+        run: uv run maturin develop --skip-install
 
       - name: Run Rust tests
         run: cargo test
 
       - name: Run Python tests
-        run: pytest tests/ -v
+        run: uv run pytest tests/ -v
