@@ -5,6 +5,18 @@ description = "Python bindings for fast EVM tracing using REVM"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.10"
+keywords = ["evm", "ethereum", "revm", "simulation", "tracing", "gas", "blockchain", "web3"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Rust",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Emulators",
+]
 dependencies = [
     "pydantic>=2.0",
 ]
