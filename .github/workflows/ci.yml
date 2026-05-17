@@ -20,6 +20,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Python ${{ matrix.python-version }}
+        id: setup-python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
@@ -42,6 +43,8 @@ jobs:
         run: uv run maturin develop --skip-install
 
       - name: Run Rust tests
+        env:
+          PYO3_PYTHON: ${{ steps.setup-python.outputs.python-path }}
         run: cargo test
 
       - name: Run Python tests
