@@ -3,7 +3,8 @@ name = "pyrevm-trace"
 version = "0.1.0"
 description = "Python bindings for fast EVM tracing using REVM"
 readme = "README.md"
-requires-python = ">=3.12"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
 dependencies = [
     "pydantic>=2.0",
 ]
@@ -16,6 +17,12 @@ build-backend = "maturin"
 features = ["pyo3/extension-module"]
 python-source = "python"
 module-name = "pyrevm_trace._pyrevm_trace"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+    "pytest-asyncio>=1.3.0",
+]
 
 [project.optional-dependencies]
 dev = ["pytest", "pytest-asyncio"]

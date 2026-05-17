@@ -2,6 +2,7 @@
 name = "pyrevm-trace"
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
 
 [lib]
 name = "_pyrevm_trace"
@@ -9,7 +10,7 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 pyo3 = { version = "0.22", features = ["extension-module"] }
-revm = { version = "14", default-features = false, features = ["std", "serde"] }
+revm = { version = "38", default-features = false, features = ["std"] }
 
 [profile.release]
 lto = true

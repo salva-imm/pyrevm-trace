@@ -2,13 +2,18 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Behavior & Tool Guidelines
+- use "rtk" before bash commands
+- Always use the Bash tool for file operations (e.g., cat, ls, grep, find) instead of internal Read or Search tools. If you need to see a file, run cat or head via Bash.
+
 ## Build & Test Commands
 
 This is a hybrid Rust/Python project. **Always use `uv run` for Python commands** — the project was created with `uv`.
 
 ```bash
 # Build the Rust extension (required after any change to src/)
-uv run maturin develop
+# --skip-install avoids maturin's pip path, which doesn't support PEP 735 dependency-groups
+uv run maturin develop --skip-install
 
 # Run Python tests
 uv run pytest
@@ -34,14 +39,14 @@ PyO3 extension compiled to `python/pyrevm_trace/_pyrevm_trace.cpython-*.so` by m
 - **`src/lib.rs`** — PyO3 module entry point. Registers all Python-visible classes. Only touch this to add new `#[pyclass]` types.
 - **`src/executor.rs`** — `EVMSimulator` `#[pyclass]`. Owns the `CacheDB<EmptyDB>` (in-memory EVM state) and all `#[pymethods]`. This is where Python ↔ REVM conversion happens: extract Python types → call REVM → convert result to Python dicts.
 - **`src/types.rs`** — Stateless conversion helpers (`parse_address`, `address_to_hex`, `py_int_to_u256`). All Rust modules that touch Python-provided addresses or amounts use these.
-- **`src/tracer.rs`** — `CallTracer` implementing REVM's `Inspector` trait for call tree capture (planned).
-- **`src/gas_profiler.rs`** — `GasProfiler` implementing `Inspector` for opcode-level gas steps (planned).
+- **`src/tracer.rs`** — `CallTracer` implementing REVM's `Inspector` trait for recursive call tree capture.
+- **`src/gas_profiler.rs`** — `GasProfiler` implementing `Inspector` for opcode-level gas steps.
 
 Data flows one way: Python dict → Rust extraction → REVM execution → result as Python dict. No Pydantic or serde on the Rust side.
 
 ### Python layer (`python/pyrevm_trace/`)
 
-Pure Python, depends on the compiled `.so`. Planned modules:
+Pure Python, depends on the compiled `.so`.
 - `models.py` — Pydantic v2 models wrapping the raw dicts from Rust (`SimulationResult`, `CallFrame`, `GasStep`, `Log`)
 - `simulator.py` — `Simulator` class: typed sync wrapper
 - `async_simulator.py` — `AsyncSimulator`: offloads simulation to `asyncio.to_thread` for non-blocking async use
