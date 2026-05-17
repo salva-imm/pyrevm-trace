@@ -14,7 +14,7 @@ Simulate transactions locally, capture call trees, and profile gas usage — no 
 
 ## Installation
 
-Requires Python 3.12+ and Rust (for building from source).
+Requires Python 3.10+ and Rust (for building from source).
 
 ```bash
 uv add pyrevm-trace
@@ -25,7 +25,7 @@ pip install pyrevm-trace
 To build from source:
 
 ```bash
-git clone https://github.com/your-org/pyrevm-trace
+git clone https://github.com/salva-imm/pyrevm-trace
 cd pyrevm-trace
 uv run maturin develop --release
 ```
